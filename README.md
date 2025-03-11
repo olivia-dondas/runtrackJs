@@ -51,7 +51,7 @@ Chaque journée est placée dans un dossier (`jour01`), et chaque exercice est s
 ✅ Premiers pas en algorithmie  
 
 📌 **Rendu**  
-Le projet est disponible sur [GitHub](https://github.com/prenom-nom/runtrackJs).  
+Le projet est disponible sur [GitHub](https://github.com/olivia-dondas/runtrackJs).  
 Chaque sous-dossier contient les fichiers **HTML et JavaScript** correspondants à chaque job.
 
 📚 **Ressources utiles**
