@@ -1,0 +1,26 @@
+/* Styles par défaut - la page est invisible au départ */
+body {
+  background-color: transparent; /* L'arrière-plan est transparent */
+  color: transparent; /* Le texte est transparent */
+  margin: 0;
+  padding: 0;
+}
+
+/* Style spécial pour La Plateforme */
+.la-plateforme {
+  background-color: rgb(0, 98, 255);
+  color: white;
+}
+
+.la-plateforme h1 {
+  color: rgb(255, 255, 255);
+}
+
+/* Des styles pour les éléments qui apparaîtront après le code Konami */
+.la-plateforme h1,
+.la-plateforme p {
+  display: block;
+  text-align: center;
+  margin-top: 50px;
+  font-family: Arial, sans-serif;
+}

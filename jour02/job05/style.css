@@ -1,0 +1,18 @@
+body {
+  min-height: 4096px;
+}
+
+/* Style du footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: rgb(0, 0, 50); /* Bleu foncé au départ */
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+}
