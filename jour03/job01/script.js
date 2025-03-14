@@ -1,3 +1,3 @@
 $("#button").click(function () {
-  $("html").hide();
+  $("#citation").hide();
 });

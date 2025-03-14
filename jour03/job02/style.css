@@ -1,0 +1,19 @@
+#unsortedRainbow {
+  display: flex;
+  flex-wrap: wrap;
+}
+#unsortedRainbow img {
+  margin: 5px;
+  cursor: pointer;
+}
+.message {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.win {
+  color: green;
+}
+.lose {
+  color: red;
+}

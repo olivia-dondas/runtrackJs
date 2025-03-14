@@ -1,19 +1,834 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello, HTML</title>
+    <meta charset="utf-8" />
+    <title>jQuery Shuffle Images by Pete R. | The Pete Design</title>
+    <meta
+      name="title"
+      content="jQuery Shuffle Images by Pete R. | The Pete Design"
+    />
+    <meta
+      name="description"
+      content="Simplest Way to shuffle through images in a Creative Way with jQuery Shuffle Images plugin by Pete Rojwongsuriya"
+    />
+    <link rel="image_src" href="/images/shuffle-images_image.jpg" />
+
+    <meta
+      content="http://www.thepetedesign.com/demos/shuffle-images.html"
+      property="og:url"
+    />
+    <meta
+      content="http://www.thepetedesign.com/images/shuffle-images_image.jpg"
+      property="og:image"
+    />
+    <link rel="shortcut icon" id="favicon" href="favicon.png" />
+    <meta name="author" content="Pete R." />
+    <link
+      rel="canonical"
+      href="http://www.thepetedesign.com/demos/shuffle-images_demo.html"
+    />
+    <link
+      href="http://fonts.googleapis.com/css?family=Noto+Serif:400italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="http://fonts.googleapis.com/css?family=Pacifico:400"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      type="text/javascript"
+      src="http://code.jquery.com/jquery-1.9.1.js"
+    ></script>
+    <script type="text/javascript" src="jquery.shuffle-images.js"></script>
+    <style>
+      html {
+        height: 100%;
+      }
+      body {
+        background: #fff;
+        padding: 0;
+        text-align: center;
+        font-family: "Open Sans";
+        position: relative;
+        margin: 0;
+        height: 100%;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizelegibility;
+      }
+
+      a {
+        color: black;
+      }
+
+      .header {
+        padding: 30px 0 0;
+        float: left;
+        width: 100%;
+        background: white;
+      }
+
+      .wrapper {
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      h1,
+      h2 {
+        width: 100%;
+        float: left;
+      }
+      h1 {
+        margin-top: 100px;
+        color: #999;
+        margin-bottom: 5px;
+        font-size: 70px;
+        font-weight: 100;
+      }
+      h2 {
+        padding: 00px 20px 30px 20px;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        letter-spacing: 0px;
+        color: #888;
+        font-size: 20px;
+        line-height: 160%;
+        font-weight: 100;
+        margin-top: 10px;
+        margin-bottom: 0;
+      }
+
+      .pointer {
+        color: #00b0ff;
+        font-family: "Pacifico";
+        font-size: 24px;
+        margin-top: 15px;
+        position: absolute;
+        top: 130px;
+        right: -40px;
+      }
+      .pointer2 {
+        color: #00b0ff;
+        font-family: "Pacifico";
+        font-size: 24px;
+        margin-top: 15px;
+        position: absolute;
+        top: 130px;
+        left: -40px;
+      }
+      pre {
+        margin: 80px auto;
+      }
+      pre code {
+        padding: 35px;
+        border-radius: 5px;
+        font-size: 15px;
+        background: rgba(0, 0, 0, 0.1);
+        border: rgba(0, 0, 0, 0.05) 5px solid;
+        max-width: 500px;
+      }
+
+      .main {
+        float: left;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .main h1 {
+        padding: 20px 50px 10px;
+        float: left;
+        width: 100%;
+        font-size: 60px;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        font-weight: 100;
+        margin: 0;
+        padding-top: 25px;
+        font-family: "Open Sans";
+        letter-spacing: -1px;
+        text-transform: capitalize;
+      }
+
+      .main h1.demo1 {
+        background: #1abc9c;
+      }
+
+      .reload.bell {
+        font-size: 12px;
+        padding: 20px;
+        width: 45px;
+        text-align: center;
+        height: 47px;
+        border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+      }
+
+      .reload.bell #notification {
+        font-size: 25px;
+        line-height: 140%;
+      }
+
+      .reload,
+      .btn {
+        display: inline-block;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        display: inline-block;
+        line-height: 100%;
+        padding: 0.7em;
+        text-decoration: none;
+        width: 100px;
+        line-height: 140%;
+        font-size: 17px;
+        font-family: Open Sans;
+        font-weight: bold;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        background-color: #4d90fe;
+        background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed);
+        background-image: linear-gradient(top, #4d90fe, #4787ed);
+        border: 1px solid #3079ed;
+        color: #fff;
+      }
+      .reload:hover {
+        background: #317af2;
+      }
+      .btn {
+        width: 200px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        background-color: #4d90fe;
+        background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed);
+        background-image: linear-gradient(top, #4d90fe, #4787ed);
+        border: 1px solid #3079ed;
+        color: #fff;
+      }
+      .clear {
+        width: auto;
+      }
+      .btn:hover,
+      .btn:hover {
+        background: #317af2;
+      }
+      .btns {
+        width: 410px;
+        margin: 50px auto;
+      }
+      .credit {
+        text-align: center;
+        color: #888;
+        padding: 10px 10px;
+        margin: 0 0 0 0;
+        float: left;
+        width: 100%;
+      }
+      .credit a {
+        text-decoration: none;
+        font-weight: bold;
+        color: black;
+      }
+
+      .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-align: center;
+        display: block;
+        padding: 7px;
+        width: 100%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        background: #f5f5f5;
+        font-weight: bold;
+        font-size: 13px;
+        color: #888;
+        -webkit-transition: all 200ms ease-out;
+        -moz-transition: all 200ms ease-out;
+        -o-transition: all 200ms ease-out;
+        transition: all 200ms ease-out;
+      }
+      .back:hover {
+        background: #eee;
+      }
+
+      .container {
+        width: 980px;
+        margin: 0 auto;
+      }
+
+      .page-container {
+        float: left;
+        width: 100%;
+        margin: 0 auto 300px;
+        position: relative;
+      }
+
+      .header {
+        overflow: hidden;
+        clear: both;
+      }
+
+      .bg {
+        position: absolute;
+        min-height: 100% !important;
+        width: 100%;
+        z-index: 0;
+      }
+
+      .ibg-bg {
+        position: absolute;
+      }
+      #btns {
+        text-align: center;
+        margin: 50px auto;
+        height: 50px;
+        overflow: hidden;
+        float: left;
+        width: 100%;
+      }
+
+      .main {
+        position: relative;
+      }
+
+      .shuffle-me {
+        width: 25%;
+        height: 150px;
+        margin: 2%;
+        display: block;
+        position: relative;
+        float: left;
+        width: 26%;
+        height: 209px;
+      }
+
+      .info {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.35);
+        padding: 20px;
+        text-align: center;
+        display: block;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+      }
+
+      .info h1 {
+        font-weight: bold;
+        color: white;
+        font-size: 20px;
+        margin: 55px 0 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 0;
+      }
+
+      .info h1 a {
+        color: #fff;
+      }
+      .info h2 {
+        margin-top: 0;
+        color: white;
+        font-size: 14px;
+        font-family: georgia;
+        font-style: italic;
+      }
+
+      .shuffle-group {
+        position: relative;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .shuffle-group .shuffle-me {
+        width: 31.9%;
+        float: left;
+        margin: 5px;
+      }
+
+      .shuffle-group .shuffle-me:first-child {
+        width: 66%;
+        float: left;
+        height: 431px;
+      }
+      .shuffle-group .shuffle-me:first-child h1 {
+        margin-top: 190px;
+        font-size: 30px;
+      }
+
+      body .one .bsa_it_ad {
+        background: transparent;
+        border: none;
+        font-family: inherit;
+        padding: 0 15px 0 10px;
+        margin: 0;
+        text-align: center;
+      }
+      body .one .bsa_it_ad:hover img {
+        -moz-box-shadow: 0 0 3px #000;
+        -webkit-box-shadow: 0 0 3px #000;
+        box-shadow: 0 0 3px #000;
+      }
+      body .one .bsa_it_ad .bsa_it_i {
+        display: block;
+        padding: 0;
+        float: none;
+        margin: 0 0 5px;
+      }
+      body .one .bsa_it_ad .bsa_it_i img {
+        padding: 0;
+        border: none;
+      }
+      body .one .bsa_it_ad .bsa_it_t {
+        padding: 6px 0;
+      }
+      body .one .bsa_it_ad .bsa_it_d {
+        padding: 0;
+        font-size: 12px;
+        color: #333;
+      }
+      body .one .bsa_it_p {
+        display: none;
+      }
+      body #bsap_aplink,
+      body #bsap_aplink:hover {
+        display: block;
+        font-size: 10px;
+        margin: 12px 15px 0;
+        text-align: center;
+      }
+
+      .ads {
+        position: fixed;
+        left: 10px;
+        bottom: 10px;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        z-index: 99;
+        text-align: center;
+        max-width: 200px;
+      }
+
+      .ads a {
+        color: black;
+      }
+
+      .ad-header {
+        margin: 0 0 -2px 0px;
+        background: white;
+        border-radius: 3px 3px 0 0;
+        overflow: hidden;
+      }
+      .ad-header a {
+        float: right;
+        border-left: 1px solid #f3f3f3;
+        padding: 10px;
+        line-height: 100%;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+        color: black;
+      }
+      .ad-header a:hover {
+        background: #eee;
+      }
+
+      .ads .promo {
+        position: absolute;
+        top: -195px;
+        left: 0;
+      }
+
+      .message {
+        max-width: 550px;
+        margin: 50px auto 0;
+        padding: 14px;
+        background: #72ec80;
+        color: #0e530e;
+        font-weight: normal;
+        font-style: normal;
+        border-radius: 3px;
+      }
+
+      .success-message a {
+        color: black;
+        border-bottom: 1px dotted #000;
+      }
+
+      .success-message {
+        background: #72ec80;
+        color: #0e530e;
+      }
+
+      .error-message a {
+        color: #fff;
+        border-bottom: 1px dotted #fff;
+      }
+
+      .error-message {
+        background: #ec7272;
+        color: #fff;
+      }
+
+      .socials {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        width: 100%;
+        float: left;
+        padding: 9px 5px 5px;
+        margin: 0 0 60px 0;
+      }
+      .socials > * {
+        display: inline !important;
+      }
+      .socials .fb-like {
+        top: -5px;
+        min-width: 85px;
+        text-align: left;
+      }
+      .socials .fb-like > span {
+        vertical-align: top;
+      }
+      .socials .twitter-share-button {
+        width: 85px !important;
+      }
+
+      #carbonads {
+        --width: 180px;
+        --font-size: 14px;
+      }
+
+      #carbonads {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial,
+          sans-serif;
+        display: block;
+        overflow: hidden;
+        margin-bottom: 20px;
+        max-width: var(--width);
+        border-radius: 4px;
+        text-align: center;
+        box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1);
+        background-color: hsl(0, 0%, 98%);
+        font-size: var(--font-size);
+        line-height: 1.5;
+      }
+
+      #carbonads a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      #carbonads a:hover {
+        color: inherit;
+      }
+
+      #carbonads span {
+        position: relative;
+        display: block;
+        overflow: hidden;
+      }
+
+      .carbon-img {
+        display: block;
+        margin-bottom: 8px;
+        max-width: var(--width);
+        line-height: 1;
+      }
+
+      .carbon-img img {
+        display: block;
+        margin: 0 auto;
+        max-width: var(--width) !important;
+        width: var(--width);
+        height: auto;
+      }
+
+      .carbon-text {
+        display: block;
+        padding: 0 1em 8px;
+      }
+
+      .carbon-poweredby {
+        display: block;
+        padding: 10px var(--font-size);
+        background: repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 5px,
+            hsla(0, 0%, 0%, 0.025) 5px,
+            hsla(0, 0%, 0%, 0.025) 10px
+          )
+          hsla(203, 11%, 95%, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        font-size: 9px;
+        line-height: 0;
+      }
+
+      @media only screen and (min-width: 320px) and (max-width: 759px) {
+        #carbonads {
+          float: none;
+          margin: 0 auto;
+          max-width: 330px;
+        }
+        #carbonads span {
+          position: relative;
+        }
+        #carbonads > span {
+          max-width: none;
+        }
+        .carbon-img {
+          float: left;
+          margin: 0;
+        }
+
+        .carbon-img img {
+          max-width: 130px !important;
+        }
+        .carbon-text {
+          float: left;
+          margin-bottom: 0;
+          padding: 8px 20px;
+          text-align: left;
+          max-width: calc(100% - 130px - 3em);
+        }
+        .carbon-poweredby {
+          left: 130px;
+          bottom: 0;
+          display: block;
+          width: 100%;
+        }
+      }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $(".shuffle-me").shuffleImages({
+          target: ".images > img",
+        });
+      });
+    </script>
   </head>
   <body>
-    <h1>Comptons jusqu'à 10 avec Javascript !</h1>
-    <p id="leCompteur"></p>
+    <div class="wrapper">
+      <!-- AdPacks.com Zone Code -->
+      <div class="ads">
+        <script
+          async
+          type="text/javascript"
+          src="//cdn.carbonads.com/carbon.js?serve=CKYI5KJE&placement=wwwthepetedesigncom"
+          id="_carbonads_js"
+        ></script>
+      </div>
+      <!-- End AdPacks.com Zone Code -->
+      <div class="main">
+        <div class="header">
+          <h1>jQuery Shuffle Images</h1>
+          <h2>
+            Simplest Way to shuffle through images in a Creative Way with jQuery
+            Shuffle Images
+          </h2>
+          <p class="credit">
+            Created by <a href="http://www.thepetedesign.com">Pete R.</a>,
+            Founder of
+            <a href="http://www.travelistly.com" target="_blank">Travelistly</a>
+            and
+            <a href="http://www.bucketlistly.com" target="_blank"
+              >BucketListly</a
+            >
+          </p>
+          <div class="btns" id="btns">
+            <a
+              class="reload btn"
+              href="https://github.com/peachananr/shuffle-images"
+              >Download on Github</a
+            >
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="shuffle-group">
+            <div data-si-mousemove-trigger="100" class="shuffle-me">
+              <a
+                href="http://blog.bucketlistly.com/post/86313792387/africa-part-1-exploring-soweto-on-a-bike-solo"
+                class="info"
+                target="_blank"
+                ><h1>Soweto on a Bike</h1>
+                <h2>Soloing Africa Part 1</h2></a
+              >
+              <div class="images">
+                <img src="images/1.jpg" />
+                <img src="images/2.jpg" />
+                <img src="images/3.jpg" />
+              </div>
+            </div>
+            <div class="shuffle-me">
+              <a
+                href="http://blog.bucketlistly.com/post/67843428144/trekking-the-himalayas-annapurna-base-camp-in-7"
+                class="info"
+                target="_blank"
+                ><h1>The Himalaya</h1>
+                <h2>Annapurna Base Camp</h2></a
+              >
+              <div class="images">
+                <img src="images/4.jpg" />
+                <img src="images/5.jpg" />
+                <img src="images/6.jpg" />
+              </div>
+            </div>
+            <div class="shuffle-me">
+              <a
+                href="http://blog.bucketlistly.com/post/59584109323/incredible-india-a-solo-travelers-journal-3"
+                class="info"
+                target="_blank"
+                ><h1>Incredible India</h1>
+                <h2>The Taj Mahal and Jaipur</h2></a
+              >
+              <div class="images">
+                <img src="images/7.jpg" />
+                <img src="images/8.jpg" />
+                <img src="images/9.jpg" />
+              </div>
+            </div>
+          </div>
+
+          <div class="shuffle-group">
+            <div data-si-mousemove-trigger="100" class="shuffle-me">
+              <a
+                href="http://blog.bucketlistly.com/post/59584109323/incredible-india-a-solo-travelers-journal-3"
+                class="info"
+                target="_blank"
+                ><h1>Incredible India</h1>
+                <h2>The Taj Mahal and Jaipur</h2></a
+              >
+              <div class="images">
+                <img src="images/7.jpg" />
+                <img src="images/8.jpg" />
+                <img src="images/9.jpg" />
+              </div>
+            </div>
+            <div class="shuffle-me">
+              <a
+                href="http://blog.bucketlistly.com/post/86313792387/africa-part-1-exploring-soweto-on-a-bike-solo"
+                class="info"
+                target="_blank"
+                ><h1>Soweto on a Bike</h1>
+                <h2>Soloing Africa Part 1</h2></a
+              >
+              <div class="images">
+                <img src="images/1.jpg" />
+                <img src="images/2.jpg" />
+                <img src="images/3.jpg" />
+              </div>
+            </div>
+            <div class="shuffle-me">
+              <a
+                href="http://blog.bucketlistly.com/post/67843428144/trekking-the-himalayas-annapurna-base-camp-in-7"
+                class="info"
+                target="_blank"
+                ><h1>The Himalaya</h1>
+                <h2>Annapurna Base Camp</h2></a
+              >
+              <div class="images">
+                <img src="images/4.jpg" />
+                <img src="images/5.jpg" />
+                <img src="images/6.jpg" />
+              </div>
+            </div>
+          </div>
+
+          <div class="shuffle-group">
+            <div data-si-mousemove-trigger="100" class="shuffle-me">
+              <a
+                href="http://blog.bucketlistly.com/post/67843428144/trekking-the-himalayas-annapurna-base-camp-in-7"
+                class="info"
+                target="_blank"
+                ><h1>The Himalaya</h1>
+                <h2>Annapurna Base Camp</h2></a
+              >
+              <div class="images">
+                <img src="images/6.jpg" />
+                <img src="images/4.jpg" />
+                <img src="images/5.jpg" />
+              </div>
+            </div>
+            <div class="shuffle-me">
+              <a
+                href="http://blog.bucketlistly.com/post/59584109323/incredible-india-a-solo-travelers-journal-3"
+                class="info"
+                target="_blank"
+                ><h1>Incredible India</h1>
+                <h2>The Taj Mahal and Jaipur</h2></a
+              >
+              <div class="images">
+                <img src="images/9.jpg" />
+                <img src="images/7.jpg" />
+                <img src="images/8.jpg" />
+              </div>
+            </div>
+            <div class="shuffle-me">
+              <a
+                href="http://blog.bucketlistly.com/post/86313792387/africa-part-1-exploring-soweto-on-a-bike-solo"
+                class="info"
+                target="_blank"
+                ><h1>Soweto on a Bike</h1>
+                <h2>Soloing Africa Part 1</h2></a
+              >
+              <div class="images">
+                <img src="images/3.jpg" />
+                <img src="images/1.jpg" />
+                <img src="images/2.jpg" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="back" href="http://www.thepetedesign.com/#plugins"
+        >Back to The Pete Design</a
+      >
+      <a href="https://github.com/peachananr/shuffle-images"
+        ><img
+          style="position: absolute; top: 0; right: 0; border: 0"
+          src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+          alt="Fork me on GitHub"
+      /></a>
+    </div>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-11278966-3"
+    ></script>
     <script>
-      let compteur = 0;
-      while (compteur < 10) {
-        compteur++;
-        document.getElementById("leCompteur").innerHTML += compteur + "<br>";
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
       }
+      gtag("js", new Date());
+
+      gtag("config", "UA-11278966-3");
     </script>
   </body>
 </html>
