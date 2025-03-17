@@ -1,0 +1,20 @@
+#connexion-form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+  margin-top: 20px;
+  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.error-highlight {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
