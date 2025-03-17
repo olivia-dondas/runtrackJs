@@ -1,0 +1,35 @@
+[
+  {
+    "utilisateur": {
+      "id": 1,
+      "nom": "Dondas",
+      "prenom": "Olivia",
+      "email": "olivia.dondas@gmail.com"
+    }
+  },
+  {
+    "utilisateur": {
+      "id": 2,
+      "nom": "Dondas",
+      "prenom": "Michel",
+      "email": "michel.dondas@gmail.com"
+    }
+  },
+  {
+    "utilisateur": {
+      "id": 3,
+      "nom": "Dondas",
+      "prenom": "Nelly",
+      "email": "nelly.dondas@gmail.com"
+    }
+  },
+
+  {
+    "utilisateur": {
+      "id": 4,
+      "nom": "Enirevec",
+      "prenom": "Eliane",
+      "email": "eliane.enirevec@gmail.com"
+    }
+  }
+]
