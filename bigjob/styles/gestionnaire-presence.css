@@ -1,0 +1,20 @@
+/* Exemples de styles pour les marges et padding */
+.header {
+  margin-bottom: 20px; /* Marge en bas du header */
+}
+
+.navbar {
+  padding: 10px 15px; /* Padding à l'intérieur de la navbar */
+}
+
+.container {
+  padding: 20px; /* Padding à l'intérieur du conteneur principal */
+}
+
+.table-container {
+  margin-top: 15px; /* Marge en haut du conteneur de la table */
+}
+
+.form_label_input_group {
+  margin-bottom: 10px; /* Marge en bas de chaque groupe de formulaire */
+}

@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Espace de demande de présence</title>
+    <title>Espace de demande de présence - La Plateforme_</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
+   
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       defer
@@ -23,12 +18,12 @@
     />
     <link rel="icon" type="image/x-icon" href="../assets/plateformeicon.png" />
   </head>
-  <body>
-    <header class="header" id="header">
+  <body class="bg-body-primary">
+    <header class="header bg-dark" id="header">
       <nav class="navbar navbar-expand-lg bg-dark p-5">
         <div class="container-fluid">
           <a class="navbar-brand" href="../index.html">
-            <img src="../assets/logo-laplateforme.png" alt="Logo" />
+            <img src="../assets/logo-laplateforme.png" alt="Logo La Plateforme_" width="auto" height="30" class="d-inline-block align-top" />
           </a>
        
         <div class="nav-item dropdown">
@@ -48,9 +43,14 @@
         </div>
       </nav>
     </header>
-    <h1>Espace de demandes de présences</h1>
-    <div class="col-lg-6 col-md-12 top-spacing">
-      <div id="component_upload_absence_container" class="basic_container">
+
+    <h1 class="text-start col-lg-12 m-5 p-1" id="title">Espace de demandes de présences</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+    
+    <div class="col-lg-6 col-md-12">
+      <div id="component_upload_presence_container" class="basic_container">
         <div class="title row align-items-center m-0">
           <h2 class="pink">Sélectionner une date</h2>
         </div>
@@ -58,7 +58,7 @@
           <div id="component_absence">
             <div id="absence_absence_container">
               <div id="absence_absence_container_upload">
-                <div class="form_label_input_group">
+                <div class="form_label_input_group col-4">
                   <label for="start_date">Date de début:</label>
                   <input
                     class="form-control"
@@ -67,7 +67,7 @@
                     id="absence_start_date"
                   />
                 </div>
-                <div class="form_label_input_group">
+                <div class="form_label_input_group col-4">
                   <label for="end_date">Date de fin:</label>
                   <input
                     class="form-control"
@@ -77,9 +77,11 @@
                   />
                 </div>
 
+                </div>
+
                 
             
-              <div class="row m-0 mt-3 table-container">
+              <div class="row m-0 mt-3 col-12 table-container">
                 <table class="table">
                   <thead>
                     <tr class="tr-section-large">

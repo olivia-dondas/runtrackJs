@@ -69,7 +69,6 @@ function validerEmail(email) {
 const administrateurs = [
   "olivia.dondas@laplateforme.io",
   "olive.dani@laplateforme.io",
-  // ... Ajouter les adresses e-mail des administrateurs
 ];
 
 // Fonction pour déterminer le rôle
