@@ -2,3 +2,13 @@ header {
   height: 100px;
   background-color: blue;
 }
+
+body {
+  min-height: 100vh; /* Assure que le body prend au moins toute la hauteur de l'écran */
+  display: flex; /* Active le modèle Flexbox */
+  flex-direction: column; /* Organise les éléments verticalement */
+}
+
+footer {
+  margin-top: auto; /* Pousse le footer vers le bas en utilisant l'espace disponible */
+}

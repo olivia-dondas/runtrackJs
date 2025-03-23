@@ -1,51 +1,91 @@
 $(document).ready(function () {
-  // ---------------------------------------------------------------------------
-  // 1. Initialisation
-  // ---------------------------------------------------------------------------
+  // Déclaration du tableau des utilisateurs
+  let utilisateurs = [];
 
-  let utilisateurs = []; // Déclare une variable pour stocker les utilisateurs
+  // Fonction pour lire les utilisateurs depuis data.json
+  function lireUtilisateursDepuisFichier() {
+    $.ajax({
+      url: "data.json",
+      dataType: "json",
+      async: false, // Important : pour que les données soient chargées avant de continuer
+      success: function (data) {
+        utilisateurs = data.utilisateurs;
+        console.log("Utilisateurs chargés depuis data.json :", utilisateurs);
 
-  // Initialisation du local storage
-  if (localStorage.getItem("utilisateurs") === null) {
-    localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+        // Stocke les utilisateurs dans le localStorage
+        ecrireUtilisateurs(utilisateurs);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error(
+          "Erreur lors du chargement de data.json :",
+          textStatus,
+          errorThrown
+        );
+      },
+    });
   }
-
-  // ---------------------------------------------------------------------------
-  // 2. Fonctions de gestion des utilisateurs (lecture, écriture, ajout)
-  // ---------------------------------------------------------------------------
 
   // Fonction pour lire les utilisateurs depuis localStorage
   function lireUtilisateurs() {
-    const utilisateursJSON = localStorage.getItem("utilisateurs");
-    if (utilisateursJSON) {
-      return JSON.parse(utilisateursJSON);
-    } else {
-      return utilisateurs; // Retourner les données initiales si localStorage est vide
+    try {
+      const utilisateursJSON = localStorage.getItem("utilisateurs");
+      return utilisateursJSON ? JSON.parse(utilisateursJSON) : [];
+    } catch (error) {
+      console.error(
+        "Erreur lors de la lecture des utilisateurs depuis localStorage :",
+        error
+      );
+      return [];
     }
   }
 
   // Fonction pour écrire les utilisateurs dans localStorage
   function ecrireUtilisateurs(utilisateurs) {
-    const utilisateursJSON = JSON.stringify(utilisateurs);
-    localStorage.setItem("utilisateurs", utilisateursJSON);
+    localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
   }
 
-  // Fonction pour ajouter un utilisateur à localStorage
-  function ajouterUtilisateur(utilisateur) {
-    utilisateurs = lireUtilisateurs();
-    utilisateurs.push(utilisateur);
-    ecrireUtilisateurs(utilisateurs);
-  }
+  // Charge les utilisateurs depuis data.json et stocke-les dans localStorage au démarrage
+  lireUtilisateursDepuisFichier();
 
-  // ---------------------------------------------------------------------------
-  // 3. Fonctions de validation (email, mot de passe, rôle)
-  // ---------------------------------------------------------------------------
+  // Gestion du formulaire de connexion
+  $("#formConnexion").submit(function (event) {
+    event.preventDefault();
 
-  // Fonction de validation de l'e-mail (avec regex)
-  function validerEmail(email) {
-    var regex = /^[a-zA-Z0-9._-]+@laplateforme\.io$/;
-    return regex.test(email);
-  }
+    const emailConnexion = $("#emailConnexion").val();
+    const motDePasseConnexion = $("#motDePasseConnexion").val();
+
+    // Récupère les utilisateurs depuis le localStorage
+    const utilisateurs = lireUtilisateurs();
+
+    // Trouver l'utilisateur correspondant à l'adresse e-mail
+    let utilisateur = utilisateurs.find((u) => u.email === emailConnexion);
+
+    if (utilisateur) {
+      console.log("Utilisateur trouvé :", utilisateur);
+
+      // Vérifier le mot de passe
+      if (motDePasseConnexion == utilisateur.motDePasse) {
+        console.log("Connexion réussie !");
+
+        // Stocker l'utilisateur connecté dans localStorage
+        localStorage.setItem(
+          "utilisateurConnecte",
+          JSON.stringify(utilisateur)
+        );
+
+        // Rediriger l'utilisateur vers la page appropriée
+        if (utilisateur.role === "administrateur") {
+          window.location.href = "pages/admin.html";
+        } else {
+          window.location.href = "pages/gestion-presence.html";
+        }
+      } else {
+        alert("Mot de passe incorrect.");
+      }
+    } else {
+      alert("Adresse e-mail incorrecte.");
+    }
+  });
 
   // Fonction pour déterminer le rôle
   function determinerRole(email) {
@@ -62,38 +102,19 @@ $(document).ready(function () {
     }
   }
 
-  // Fonction pour "hacher" le mot de passe (sans bcryptjs)
-  function hacherMotDePasse(motDePasse) {
-    return motDePasse;
+  // Fonction pour générer un ID unique
+  function generateId() {
+    return Math.random().toString(36).substring(2, 15);
   }
 
-  // Fonction pour "vérifier" le mot de passe (sans bcryptjs)
-  function verifierMotDePasse(motDePasseEnClair, motDePasseHache) {
-    console.log(
-      "Mot de passe en clair : " +
-        motDePasseEnClair +
-        " et mot de passe Haché : " +
-        motDePasseHache
-    );
-    return motDePasseEnClair === motDePasseHache;
-  }
-
-  // ---------------------------------------------------------------------------
-  // 4. Fonctions de gestion des formulaires (inscription, connexion)
-  // ---------------------------------------------------------------------------
-
-  // Partie inscription
-  $("#formInscription").on("submit", function (e) {
-    gererFormulaireInscription(e);
-  });
-
-  function gererFormulaireInscription(e) {
-    e.preventDefault();
+  // Gestion du formulaire d'inscription
+  $("#formInscription").on("submit", function (event) {
+    event.preventDefault();
 
     const nom = $("#nomInscription").val();
     const email = $("#emailInscription").val();
     const motDePasse = $("#motDePasseInscription").val();
-    const confirmationMotDePasse = $("#motDePasseConfirmation").val(); // Correction : il faut utiliser le champ de confirmation
+    const confirmationMotDePasse = $("#motDePasseConfirmation").val();
 
     if (!email.endsWith("@laplateforme.io")) {
       alert("Veuillez utiliser le format nom.prenom@laplateforme.io");
@@ -124,80 +145,26 @@ $(document).ready(function () {
       return;
     }
 
-    // Créer l'objet utilisateur
     const utilisateur = {
       id: generateId(),
       nom: nom,
       email: email,
       motDePasse: motDePasse,
-      role: determinerRole(email), // Déterminer le rôle en fonction de l'adresse e-mail
+      role: determinerRole(email),
     };
 
-    //On recupere les utilisateurs depuis le local storage
-    utilisateurs = lireUtilisateurs();
+    // Récupère les utilisateurs depuis le localStorage
+    const utilisateurs = lireUtilisateurs();
 
-    // Ajouter l'utilisateur au tableau
+    // Ajoute le nouvel utilisateur au tableau
     utilisateurs.push(utilisateur);
 
-    // Écrire les utilisateurs dans localStorage
+    // Stocke les informations des utilisateurs dans le localStorage
     ecrireUtilisateurs(utilisateurs);
 
     alert("Inscription réussie");
-    window.location.href = "index.html"; // Redirection vers la page d'accueil après inscription
-  }
-
-  // Gestion du formulaire de connexion
-  $("#formConnexion").submit(function (event) {
-    gererFormulaireConnexion(event);
+    window.location.href = "index.html";
   });
-
-  function gererFormulaireConnexion(event) {
-    event.preventDefault();
-
-    const emailConnexion = $("#emailConnexion").val();
-    const motDePasseConnexion = $("#motDePasseConnexion").val();
-
-    // Trouver l'utilisateur correspondant à l'adresse e-mail
-    let utilisateur = utilisateurs.find((u) => u.email === emailConnexion);
-
-    if (utilisateur) {
-      console.log("Utilisateur trouvé :", utilisateur);
-
-      // Vérifier le mot de passe
-      if (verifierMotDePasse(motDePasseConnexion, utilisateur.motDePasse)) {
-        console.log("Connexion réussie !");
-
-        // Stocker l'utilisateur connecté dans localStorage
-        localStorage.setItem(
-          "utilisateurConnecte",
-          JSON.stringify(utilisateur)
-        );
-        console.log("Utilisateur stocké dans localStorage :", utilisateur); // Ajoute cette ligne
-
-        // Rediriger l'utilisateur vers la page appropriée
-        if (utilisateur.role === "administrateur") {
-          window.location.href = "pages/admin.html";
-        } else {
-          window.location.href = "pages/gestion-presence.html";
-        }
-      } else {
-        alert("Mot de passe incorrect.");
-      }
-    } else {
-      alert("Adresse e-mail incorrecte.");
-    }
-  }
-  // ---------------------------------------------------------------------------
-  // 5. Fonctions utilitaires (génération d'ID, etc.)
-  // ---------------------------------------------------------------------------
-  // Fonction pour générer un ID unique
-  function generateId() {
-    return Math.random().toString(36).substring(2, 15);
-  }
-
-  // ---------------------------------------------------------------------------
-  // 6. Gestion des événements (inscription, connexion, etc.)
-  // ---------------------------------------------------------------------------
 
   // Réinitialisation du formulaire d'inscription après la fermeture du modal
   $("#modalInscription").on("hidden.bs.modal", function () {

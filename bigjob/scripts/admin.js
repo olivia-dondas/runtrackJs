@@ -1,10 +1,11 @@
 $(document).ready(function () {
   // 1. Vérification du rôle de l'administrateur
   const utilisateurConnecte = lireUtilisateurConnecte();
-  console.log("Valeur de utilisateurConnecte :", utilisateurConnecte); // Ajoute cette ligne
+  console.log("Admin connecté :", utilisateurConnecte);
+
   if (!utilisateurConnecte || utilisateurConnecte.role !== "administrateur") {
     // Rediriger vers la page d'accueil si l'utilisateur n'est pas un administrateur
-    window.location.href = "../index.html"; // Remonte d'un niveau pour atteindre la racine
+    window.location.href = "../index.html";
     return;
   }
 
@@ -12,27 +13,29 @@ $(document).ready(function () {
   afficherDemandesPresence();
 
   // Fonction pour afficher la liste des demandes de présence
-  async function afficherDemandesPresence() {
+  function afficherDemandesPresence() {
     const demandesPresence = lireDemandesPresence();
+    console.log("Toutes les demandes :", demandesPresence);
     const utilisateurs = lireUtilisateurs();
+    console.log("Tous les utilisateurs :", utilisateurs);
+
+    // Vérifie si le tableau 'utilisateurs' est null ou undefined
+    if (!utilisateurs) {
+      console.error("Le tableau 'utilisateurs' est null ou undefined !");
+      return;
+    }
+
+    // Récupérer le tableau des demandes de présence
+    const tableauDemandes = $("#listeDemandesPresence");
+
+    // Vider le tableau
+    tableauDemandes.empty();
 
     // Créer le tableau HTML
-    let tableauHTML = `
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Date</th>
-            <th>Statut</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-    `;
+    let tableauHTML = "";
 
     for (const demande of demandesPresence) {
-      // Récupérer l'utilisateur correspondant à la demande
+      // Vérifie si l'utilisateur est trouvé avant d'accéder à ses propriétés
       const utilisateur = utilisateurs.find(
         (u) => u.id === demande.idUtilisateur
       );
@@ -42,47 +45,37 @@ $(document).ready(function () {
           <tr>
             <td>${utilisateur.nom}</td>
             <td>${utilisateur.email}</td>
-            <td>${demande.date}</td>
+            <td>${demande.dateDebut}</td>
+            <td>${demande.dateFin}</td>
             <td>${demande.statut}</td>
             <td>
-              <button class="btn btn-success btn-sm accepter" data-id="${demande.idUtilisateur}" data-date="${demande.date}">Accepter</button>
-              <button class="btn btn-danger btn-sm refuser" data-id="${demande.idUtilisateur}" data-date="${demande.date}">Refuser</button>
+              <button class="btn btn-success btn-sm action-modifier-statut" data-id="${demande.id}" data-statut="acceptee">Approuver</button>
+              <button class="btn btn-danger btn-sm action-modifier-statut" data-id="${demande.id}" data-statut="refusee">Refuser</button>
             </td>
           </tr>
         `;
       }
     }
 
-    tableauHTML += `
-        </tbody>
-      </table>
-    `;
+    console.log("Code HTML généré :", tableauHTML);
 
     // Afficher le tableau dans la page
-    $("#listeDemandesPresence").html(tableauHTML);
+    tableauDemandes.html(tableauHTML);
 
     // 3. Gérer les actions (Accepter/Refuser)
-    $(".accepter").click(function () {
-      const idUtilisateur = $(this).data("id");
-      const date = $(this).data("date");
-      modifierStatutDemande(idUtilisateur, date, "acceptee");
-    });
-
-    $(".refuser").click(function () {
-      const idUtilisateur = $(this).data("id");
-      const date = $(this).data("date");
-      modifierStatutDemande(idUtilisateur, date, "refusee");
+    $(".action-modifier-statut").click(function () {
+      const idDemande = $(this).data("id");
+      const statut = $(this).data("statut");
+      modifierStatutDemande(idDemande, statut);
     });
   }
 
   // Fonction pour modifier le statut d'une demande de présence
-  async function modifierStatutDemande(idUtilisateur, date, statut) {
+  function modifierStatutDemande(idDemande, statut) {
     let demandesPresence = lireDemandesPresence();
 
     // Trouver la demande à modifier
-    const demandeIndex = demandesPresence.findIndex(
-      (d) => d.idUtilisateur === idUtilisateur && d.date === date
-    );
+    const demandeIndex = demandesPresence.findIndex((d) => d.id === idDemande);
 
     if (demandeIndex !== -1) {
       // Modifier le statut
@@ -96,27 +89,46 @@ $(document).ready(function () {
     }
   }
 
-  // Fonctions utilitaires (à adapter à ton code existant)
+  // Fonctions utilitaires
   function lireUtilisateurConnecte() {
-    // Récupérer l'utilisateur connecté depuis localStorage (à adapter)
     const utilisateurJSON = localStorage.getItem("utilisateurConnecte");
     return utilisateurJSON ? JSON.parse(utilisateurJSON) : null;
   }
 
   function lireDemandesPresence() {
-    // Récupérer les demandes de présence depuis localStorage (à adapter)
-    const demandesJSON = localStorage.getItem("demandesPresence");
-    return demandesJSON ? JSON.parse(demandesJSON) : [];
+    try {
+      const demandesJSON = localStorage.getItem("demandesPresence");
+      return demandesJSON ? JSON.parse(demandesJSON) : [];
+    } catch (error) {
+      console.error(
+        "Erreur lors de la lecture des demandes de présence depuis localStorage :",
+        error
+      );
+      return [];
+    }
   }
 
   function lireUtilisateurs() {
-    // Récupérer les utilisateurs depuis localStorage (à adapter)
-    const utilisateursJSON = localStorage.getItem("utilisateurs");
-    return utilisateursJSON ? JSON.parse(utilisateursJSON) : [];
+    try {
+      const utilisateursJSON = localStorage.getItem("utilisateurs");
+      return utilisateursJSON ? JSON.parse(utilisateursJSON) : null;
+    } catch (error) {
+      console.error(
+        "Erreur lors de la lecture des utilisateurs depuis localStorage :",
+        error
+      );
+      return [];
+    }
   }
 
   function ecrireDemandesPresence(demandes) {
-    // Écrire les demandes de présence dans localStorage (à adapter)
-    localStorage.setItem("demandesPresence", JSON.stringify(demandes));
+    try {
+      localStorage.setItem("demandesPresence", JSON.stringify(demandes));
+    } catch (error) {
+      console.error(
+        "Erreur lors de l'écriture des demandes de présence dans localStorage :",
+        error
+      );
+    }
   }
 });
