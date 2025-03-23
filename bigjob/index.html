@@ -32,21 +32,23 @@
   </head>
 
   <body class="bg-body-secondary">
-    <header class="header bg-dark">
+    <header class="header bg-dark sticky-top shadow-sm">
       <nav class="navbar navbar-expand-lg bg-dark p-5">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">
+        <div class="container-fluid justify-content-center">
+          <a
+            class="navbar-brand d-flex justify-content-center align-items-center"
+            href="index.html"
+          >
             <img
               src="./assets/logo-laplateforme.png"
               alt="Logo La Plateforme_"
-              width="auto"
-              height="auto"
-              class="d-inline-block align-top"
+              class="img-fluid w-50 w-md-25 w-lg-15"
             />
           </a>
         </div>
       </nav>
     </header>
+
     <main>
       <div class="container">
         <div class="row">
@@ -187,8 +189,14 @@
         </div>
       </div>
     </main>
-    <footer class="bg-dark text-light text-center py-3">
-      <p>Développé par Oliv3Dani - 2024</p>
+    <footer class="bg-dark text-light py-4 mt-5 border-top border-primary">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <p class="mb-0">Développé par Oliv3Dani - 2024</p>
+          </div>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

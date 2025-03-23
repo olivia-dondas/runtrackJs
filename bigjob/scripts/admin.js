@@ -132,3 +132,16 @@ $(document).ready(function () {
     }
   }
 });
+
+$(document).ready(function () {
+  // Gestion de la déconnexion
+  $("#header-disconnect").click(function (event) {
+    event.preventDefault();
+
+    // Supprimer l'utilisateur connecté du localStorage
+    localStorage.removeItem("utilisateurConnecte");
+
+    // Rediriger l'utilisateur vers la page d'accueil
+    window.location.href = "../index.html";
+  });
+});

@@ -18,107 +18,94 @@
     <link rel="icon" type="image/x-icon" href="../assets/plateformeicon.png" />
   </head>
   <body class="bg-light">
-    <header class="header bg-dark" id="header">
+
+    <header class="header bg-dark sticky-top shadow-sm">
       <nav class="navbar navbar-expand-lg bg-dark p-5">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="../index.html">
+        <div class="container-fluid justify-content-center">
+          <a
+            class="navbar-brand d-flex justify-content-center align-items-center"
+            href="index.html"
+          >
             <img
               src="../assets/logo-laplateforme.png"
               alt="Logo La Plateforme_"
-              width="auto"
-              height="30"
-              class="d-inline-block align-top"
+              class="img-fluid w-50 w-md-25 w-lg-15"
             />
           </a>
-          <div class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle text-white"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Mon Compte
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Déconnexion</a></li>
-            </ul>
-          </div>
         </div>
+        <div class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-white"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Mon Compte
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+          </ul>
+        </div>
+      </div>
       </nav>
     </header>
-    <main class="container">
-      <h1 class="text-center col-lg-12 m-5 p-1" id="title">
-        Espace de demandes de présences
-      </h1>
+
+
+   
+    <main class="container my-5">
+      <h1 class="text-center mb-4">Espace de demandes de présences</h1>
       <div class="row">
-        <div class="col-12">
-          <div class="col-lg-6 col-md-12">
-            <div
-              id="component_upload_presence_container"
-              class="basic_container"
-            >
-              <div class="title row align-items-center m-0">
-                <h2 class="pink">Demande de présence</h2>
-              </div>
+        <!-- Formulaire de demande de présence -->
+        <div class="col-lg-6 col-md-12 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h2 class="card-title mb-0">Demande de présence</h2>
+            </div>
+            <div class="card-body">
               <form id="formDemandePresence">
                 <div class="mb-3">
-                  <label for="presence_start_date" class="form-label"
-                    >Date de début</label
-                  >
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="presence_start_date"
-                    name="presence_start_date"
-                    required
-                  />
+                  <label for="presence_start_date" class="form-label">Date de début</label>
+                  <input type="date" class="form-control" id="presence_start_date" name="presence_start_date" required />
                 </div>
                 <div class="mb-3">
-                  <label for="presence_end_date" class="form-label"
-                    >Date de fin</label
-                  >
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="presence_end_date"
-                    name="presence_end_date"
-                    required
-                  />
+                  <label for="presence_end_date" class="form-label">Date de fin</label>
+                  <input type="date" class="form-control" id="presence_end_date" name="presence_end_date" required />
                 </div>
                 <div class="mb-3">
-                  <label for="presence_commentaire" class="form-label"
-                    >Commentaire</label
-                  >
-                  <textarea
-                    class="form-control"
-                    id="presence_commentaire"
-                    name="presence_commentaire"
-                    rows="3"
-                  ></textarea>
+                  <label for="presence_commentaire" class="form-label">Commentaire</label>
+                  <textarea class="form-control" id="presence_commentaire" name="presence_commentaire" rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                  Soumettre la demande
-                </button>
+                <button type="submit" class="btn btn-primary w-100">Soumettre la demande</button>
               </form>
             </div>
           </div>
-          <div class="col-lg-6 col-md-12">
-            <h2>Liste des demandes</h2>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Date de début</th>
-                  <th>Date de fin</th>
-                  <th>Durée</th>
-                  <th>Statut</th>
-                  <th>Commentaire</th>
-                </tr>
-              </thead>
-              <tbody id="presence_presences_list">
-                <!-- Les demandes seront ajoutées ici par JavaScript -->
-              </tbody>
-            </table>
+        </div>
+    
+        <!-- Liste des demandes -->
+        <div class="col-lg-6 col-md-12">
+          <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h2 class="card-title mb-0">Liste des demandes</h2>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Date de début</th>
+                      <th>Date de fin</th>
+                      <th>Durée</th>
+                      <th>Statut</th>
+                      <th>Commentaire</th>
+                    </tr>
+                  </thead>
+                  <tbody id="presence_presences_list">
+                    <!-- Les demandes seront ajoutées ici par JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
