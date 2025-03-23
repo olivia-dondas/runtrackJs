@@ -4,14 +4,14 @@
       "id": "1",
       "nom": "Olivia",
       "email": "olivia.dondas@laplateforme.io",
-      "motDePasse": "$2b$10$abcdefghijklmnopqrstuvwxyz...",
+      "motDePasse": "LaPlateforme2@",
       "role": "administrateur"
     },
     {
       "id": "2",
       "nom": "John",
-      "email": "john.doe@laplateforme.io",
-      "motDePasse": "$2b$10$zyxwvutsrqponmlkjihgfedcba...",
+      "email": "student1@laplateforme.io",
+      "motDePasse": "LaPlateforme2@",
       "role": "etudiant"
     }
   ]

@@ -1,9 +1,10 @@
 $(document).ready(function () {
   // 1. Vérification du rôle de l'administrateur
   const utilisateurConnecte = lireUtilisateurConnecte();
+  console.log("Valeur de utilisateurConnecte :", utilisateurConnecte); // Ajoute cette ligne
   if (!utilisateurConnecte || utilisateurConnecte.role !== "administrateur") {
     // Rediriger vers la page d'accueil si l'utilisateur n'est pas un administrateur
-    window.location.href = "index.html";
+    window.location.href = "../index.html"; // Remonte d'un niveau pour atteindre la racine
     return;
   }
 
@@ -17,18 +18,18 @@ $(document).ready(function () {
 
     // Créer le tableau HTML
     let tableauHTML = `
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Date</th>
-              <th>Statut</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
 
     for (const demande of demandesPresence) {
       // Récupérer l'utilisateur correspondant à la demande
@@ -38,24 +39,24 @@ $(document).ready(function () {
 
       if (utilisateur) {
         tableauHTML += `
-            <tr>
-              <td>${utilisateur.nom}</td>
-              <td>${utilisateur.email}</td>
-              <td>${demande.date}</td>
-              <td>${demande.statut}</td>
-              <td>
-                <button class="btn btn-success btn-sm accepter" data-id="${demande.idUtilisateur}" data-date="${demande.date}">Accepter</button>
-                <button class="btn btn-danger btn-sm refuser" data-id="${demande.idUtilisateur}" data-date="${demande.date}">Refuser</button>
-              </td>
-            </tr>
-          `;
+          <tr>
+            <td>${utilisateur.nom}</td>
+            <td>${utilisateur.email}</td>
+            <td>${demande.date}</td>
+            <td>${demande.statut}</td>
+            <td>
+              <button class="btn btn-success btn-sm accepter" data-id="${demande.idUtilisateur}" data-date="${demande.date}">Accepter</button>
+              <button class="btn btn-danger btn-sm refuser" data-id="${demande.idUtilisateur}" data-date="${demande.date}">Refuser</button>
+            </td>
+          </tr>
+        `;
       }
     }
 
     tableauHTML += `
-          </tbody>
-        </table>
-      `;
+        </tbody>
+      </table>
+    `;
 
     // Afficher le tableau dans la page
     $("#listeDemandesPresence").html(tableauHTML);

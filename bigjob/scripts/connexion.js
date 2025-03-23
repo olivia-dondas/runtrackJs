@@ -1,28 +1,56 @@
-// Liste blanche d'adresses e-mails pour les administrateurs
-const emailsAdmins = [
-  "olivia.dondas@laplateforme.io",
-  "olive.dani@laplateforme.io",
-];
+$(document).ready(function () {
+  const emailsAdmins = [
+    "olivia.dondas@laplateforme.io",
+    "olive.dani@laplateforme.io",
+  ];
 
-// Fonction pour gérer la soumission du formulaire de connexion
-$("#formConnexion").on("submit", function (e) {
-  e.preventDefault();
+  const emailsEtudiants = [
+    "student1@laplateforme.io",
+    "student2@laplateforme.io",
+    // Ajouter d'autres emails d'étudiants ici
+  ];
 
-  const email = $("#emailConnexion").val();
-  const motDePasse = $("#motDePasseConnexion").val();
+  // Écoute des changements sur les champs email et mot de passe
+  $("#emailConnexion, #motDePasseConnexion").on("input", function () {
+    // Activer le bouton seulement si les deux champs sont remplis
+    $("#submitConnexion").prop(
+      "disabled",
+      !$("#emailConnexion").val() || !$("#motDePasseConnexion").val()
+    );
+  });
 
-  // Vérifier si l'email est dans la liste des administrateurs
-  if (emailsAdmins.includes(email)) {
-    console.log("Bienvenue, Administrateur");
-    localStorage.setItem("userRole", "administrateur");
-  } else {
-    console.log("Bienvenue, Étudiant");
-    localStorage.setItem("userRole", "etudiant");
-  }
+  // Gestion de la soumission du formulaire
+  $("#formConnexion").on("submit", function (e) {
+    e.preventDefault();
 
-  // Pour une gestion basique, on peut sauvegarder l'email dans localStorage aussi
-  localStorage.setItem("email", email);
+    const email = $("#emailConnexion").val();
+    const motDePasse = $("#motDePasseConnexion").val();
 
-  // Si tu veux simuler une redirection vers une page d'accueil, tu peux faire ça ici
-  window.location.href = "page_accueil.html"; // Redirection vers la page d'accueil (par exemple)
+    if (!email || !motDePasse) {
+      alert("Veuillez remplir tous les champs.");
+      return;
+    }
+
+    let redirection = ""; // Variable pour stocker l'URL de redirection
+
+    if (emailsAdmins.includes(email)) {
+      console.log("Bienvenue, Administrateur");
+      localStorage.setItem("userRole", "administrateur");
+      localStorage.setItem("email", email);
+      redirection = "pages/admin.html";
+    } else if (emailsEtudiants.includes(email)) {
+      console.log("Bienvenue, Étudiant");
+      localStorage.setItem("userRole", "etudiant");
+      localStorage.setItem("email", email);
+      redirection = "pages/gestion-presence.html";
+    } else {
+      alert("Adresse e-mail inconnue. Veuillez vérifier votre saisie.");
+      return;
+    }
+
+    // Redirection si l'adresse e-mail est connue
+    if (redirection) {
+      window.location.href = redirection;
+    }
+  });
 });
